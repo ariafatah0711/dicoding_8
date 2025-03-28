@@ -1,0 +1,117 @@
+Attaching to item-db, item-app
+[36mitem-app    |[0m 
+[36mitem-app    |[0m > docker-software-delivery@1.0.0 start /app
+[36mitem-app    |[0m > node ./bin/www
+[36mitem-app    |[0m 
+[36mitem-app    |[0m NODE_ENV: production
+[36mitem-app    |[0m /app/node_modules/mongodb/lib/mongo_client.js:421
+[36mitem-app    |[0m           throw err
+[36mitem-app    |[0m           ^
+[36mitem-app    |[0m 
+[36mitem-app    |[0m AssertionError [ERR_ASSERTION]: null == Error [MongoError]: failed to connect to server [item-db:27017] on first connect [Error: connect ECONNREFUSED 172.24.0.3:27017
+[36mitem-app    |[0m     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1159:16) {
+[36mitem-app    |[0m   name: 'MongoError'
+[36mitem-app    |[0m }]
+[36mitem-app    |[0m     at Pool.<anonymous> (/app/node_modules/mongodb-core/lib/topologies/server.js:336:35)
+[36mitem-app    |[0m     at Pool.emit (events.js:400:28)
+[36mitem-app    |[0m     at Connection.<anonymous> (/app/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+[36mitem-app    |[0m     at Object.onceWrapper (events.js:520:26)
+[36mitem-app    |[0m     at Connection.emit (e...
+[36mitem-app    |[0m     at /app/app.js:24:10
+[36mitem-app    |[0m     at connectCallback (/app/node_modules/mongodb/lib/mongo_client.js:527:5)
+[36mitem-app    |[0m     at /app/node_modules/mongodb/lib/mongo_client.js:418:11
+[36mitem-app    |[0m     at processTicksAndRejections (internal/process/task_queues.js:77:11) {
+[36mitem-app    |[0m   generatedMessage: true,
+[36mitem-app    |[0m   code: 'ERR_ASSERTION',
+[36mitem-app    |[0m   actual: null,
+[36mitem-app    |[0m   expected: Error [MongoError]: failed to connect to server [item-db:27017] on first connect [Error: connect ECONNREFUSED 172.24.0.3:27017
+[36mitem-app    |[0m       at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1159:16) {
+[36mitem-app    |[0m     name: 'MongoError'
+[36mitem-app    |[0m   }]
+[36mitem-app    |[0m       at Pool.<anonymous> (/app/node_modules/mongodb-core/lib/topologies/server.js:336:35)
+[36mitem-app    |[0m       at Pool.emit (events.js:400:28)
+[36mitem-app    |[0m       at Connection.<anonymous> (/app/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+[36mitem-app    |[0m       at Object.onceWrapper (events.js:520:26)
+[36mitem-app    |[0m       at Connection.emit (events.js:400:28)
+[36mitem-app    |[0m       at Socket.<anonymous> (/app/node_modules/mongodb-core/lib/connection/connection.js:189:49)
+[36mitem-app    |[0m       at Object.onceWrapper (events.js:520:26)
+[36mitem-app    |[0m       at Socket.emit (events.js:400:28)
+[36mitem-app    |[0m       at emitErrorNT (internal/streams/destroy.js:106:8)
+[36mitem-app    |[0m       at emitErrorCloseNT (internal/streams/destroy.js:74:3),
+[36mitem-app    |[0m   operator: '=='
+[36mitem-app    |[0m }
+[36mitem-app    |[0m npm ERR! code ELIFECYCLE
+[36mitem-app    |[0m npm ERR! errno 1
+[36mitem-app    |[0m npm ERR! docker-software-delivery@1.0.0 start: `node ./bin/www`
+[36mitem-app    |[0m npm ERR! Exit status 1
+[36mitem-app    |[0m npm ERR! 
+[36mitem-app    |[0m npm ERR! Failed at the docker-software-delivery@1.0.0 start script.
+[36mitem-app    |[0m npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+[36mitem-app    |[0m 
+[36mitem-app    |[0m npm ERR! A complete log of this run can be found in:
+[36mitem-app    |[0m npm ERR!     /root/.npm/_logs/2025-03-28T07_29_11_535Z-debug.log
+[36mitem-app    |[0m 
+[36mitem-app    |[0m > docker-software-delivery@1.0.0 start /app
+[36mitem-app    |[0m > node ./bin/www
+[36mitem-app    |[0m 
+[36mitem-app    |[0m NODE_ENV: production
+[36mitem-app    |[0m Connected to database
+[36mitem-app    |[0m [0mGET / [36m304 [0m208.632 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m1.892 ms - -[0m
+[36mitem-app    |[0m [0mGET /stylesheets/style.css [32m200 [0m41.605 ms - 519[0m
+[36mitem-app    |[0m [0mGET /api [32m200 [0m9.926 ms - 2[0m
+[36mitem-app    |[0m [0mGET / [36m304 [0m1.162 ms - -[0m
+[36mitem-app    |[0m [0mGET /stylesheets/style.css [36m304 [0m1.575 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m0.492 ms - -[0m
+[36mitem-app    |[0m [0mGET /api [36m304 [0m2.801 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m0.512 ms - -[0m
+[36mitem-app    |[0m [0mPOST /api [32m201 [0m75.079 ms - 48[0m
+[36mitem-app    |[0m [0mPOST /api [32m201 [0m2.285 ms - 48[0m
+[36mitem-app    |[0m [0mGET / [36m304 [0m1.181 ms - -[0m
+[36mitem-app    |[0m [0mGET /stylesheets/style.css [36m304 [0m1.069 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m0.484 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m0.710 ms - -[0m
+[36mitem-app    |[0m [0mGET /api [32m200 [0m3.183 ms - 99[0m
+[36mitem-app    |[0m [0mGET / [36m304 [0m0.993 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m2.499 ms - -[0m
+[36mitem-app    |[0m [0mGET /stylesheets/style.css [36m304 [0m3.274 ms - -[0m
+[36mitem-app    |[0m [0mGET /api [36m304 [0m2.494 ms - -[0m
+[36mitem-app    |[0m [0mGET /javascripts/dist/dist.min.js [36m304 [0m0.514 ms - -[0m
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] MongoDB starting : pid=1 port=27017 dbpath=/data/db 64-bit host=47b42f310d91
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] db version v3.6.23
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] git version: d352e6a4764659e0d0350ce77279de3c1f243e5c
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2g  1 Mar 2016
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] modules: none
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] build environment:
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten]     distmod: ubuntu1604
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten]     distarch: x86_64
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+[33mitem-db     |[0m 2025-03-28T07:29:11.150+0000 I CONTROL  [initandlisten] options: { net: { bindIpAll: true } }
+[33mitem-db     |[0m 2025-03-28T07:29:11.151+0000 I STORAGE  [initandlisten] 
+[33mitem-db     |[0m 2025-03-28T07:29:11.151+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+[33mitem-db     |[0m 2025-03-28T07:29:11.151+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+[33mitem-db     |[0m 2025-03-28T07:29:11.152+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3269M,cache_overflow=(file_max=0M),session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+[33mitem-db     |[0m 2025-03-28T07:29:12.146+0000 I STORAGE  [initandlisten] WiredTiger message [1743146952:146215][1:0x7ff9b4665a40], txn-recover: Set global recovery timestamp: 0
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] 
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] 
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] 
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I CONTROL  [initandlisten] 
+[33mitem-db     |[0m 2025-03-28T07:29:12.192+0000 I STORAGE  [initandlisten] createCollection: admin.system.version with provided UUID: 4c263e61-68e6-4805-980b-1a72cf3da91a
+[33mitem-db     |[0m 2025-03-28T07:29:12.212+0000 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.6
+[33mitem-db     |[0m 2025-03-28T07:29:12.213+0000 I STORAGE  [initandlisten] createCollection: local.startup_log with generated UUID: b2071deb-add0-453c-988f-46e998e36603
+[33mitem-db     |[0m 2025-03-28T07:29:12.231+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+[33mitem-db     |[0m 2025-03-28T07:29:12.232+0000 I NETWORK  [initandlisten] listening via socket bound to 0.0.0.0
+[33mitem-db     |[0m 2025-03-28T07:29:12.232+0000 I STORAGE  [LogicalSessionCacheRefresh] createCollection: config.system.sessions with generated UUID: 8e435ede-f37c-4b99-9cd6-1f47825dc218
+[33mitem-db     |[0m 2025-03-28T07:29:12.232+0000 I NETWORK  [initandlisten] listening via socket bound to /tmp/mongodb-27017.sock
+[33mitem-db     |[0m 2025-03-28T07:29:12.232+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+[33mitem-db     |[0m 2025-03-28T07:29:12.256+0000 I INDEX    [LogicalSessionCacheRefresh] build index on: config.system.sessions properties: { v: 2, key: { lastUse: 1 }, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 }
+[33mitem-db     |[0m 2025-03-28T07:29:12.256+0000 I INDEX    [LogicalSessionCacheRefresh] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+[33mitem-db     |[0m 2025-03-28T07:29:12.258+0000 I INDEX    [LogicalSessionCacheRefresh] build index done.  scanned 0 total records. 0 secs
+[33mitem-db     |[0m 2025-03-28T07:29:13.155+0000 I NETWORK  [listener] connection accepted from 172.24.0.2:52446 #1 (1 connection now open)
+[33mitem-db     |[0m 2025-03-28T07:29:13.159+0000 I NETWORK  [conn1] received client metadata from 172.24.0.2:52446 conn1: { driver: { name: "nodejs", version: "2.2.36" }, os: { type: "Linux", name: "linux", architecture: "x64", version: "5.15.167.4-microsoft-standard-WSL2" }, platform: "Node.js v14.21.3, LE, mongodb-core: 2.1.20" }
+[33mitem-db     |[0m 2025-03-28T07:29:39.887+0000 I STORAGE  [conn1] createCollection: accumulator.documents with generated UUID: 34fb782c-8713-4d76-ae8c-999f9748822d
