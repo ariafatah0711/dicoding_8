@@ -1,3 +1,4 @@
+#!/bin/bash
 source utils.sh
 
 # ================ Default values ================
