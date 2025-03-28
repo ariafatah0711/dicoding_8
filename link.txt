@@ -1,0 +1,3 @@
+github repository: https://github.com/ariafatah0711/dicoding_8
+github packages: https://github.com/users/ariafatah0711/packages/container/package/item-app
+docker hub: https://hub.docker.com/repository/docker/ariafatah/item-app
