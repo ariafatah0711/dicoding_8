@@ -50,6 +50,13 @@ echo -e "───────────────────────�
 echo -e "${CYAN}[*] Image List: ${RST}"
 docker images | grep -v "<none>"
 
+# ================= TAG IMAGE =================
+NewImage="${registry}/$username/$ImageName:$ImageTag"
+echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
+echo -e "──────────────────────────────"
+# echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
+run_with_loading docker tag $ImageName:$ImageTag $NewImage
+
 # ================= Login Registry =================
 echo -e "\n${BLUE}[+] Login Registry: $registry ${RST}"
 echo -e "──────────────────────────────"
@@ -62,13 +69,6 @@ if ! (echo "$TOKEN_REGISTRY" | docker login $registry -u $username --password-st
 else
     echo -e "${GREEN}[Done] Successfully logged in to $registry!${RST}"
 fi
-
-# ================= TAG IMAGE =================
-NewImage="${registry}/$username/$ImageName:$ImageTag"
-echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
-echo -e "──────────────────────────────"
-# echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
-run_with_loading docker tag $ImageName:$ImageTag $NewImage
 
 # ================= PUSH IMAGE =================
 echo -e "\n${BLUE}[+] PUSH Image $NewImage ${RST}"
