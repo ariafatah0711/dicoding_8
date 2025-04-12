@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: karsajobs
+  labels:
+    app: karsajobs
+spec:
+  ports:
+    - port: 8080
+  selectors:
+    app: karsajobs
+    tier: backend
+  ClusterIP: None

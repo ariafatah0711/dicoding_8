@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karsajobs
+spec:
+  replicas: 2
+  selectors:
+    matchlabels:
+      app: kursajobs
+      tier: backend
