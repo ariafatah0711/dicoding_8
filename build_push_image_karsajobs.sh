@@ -9,7 +9,7 @@ username="ariafatah0711"
 registry="ghcr.io"
 
 # Load TOKEN_REGISTRY dari file .env
-export $(grep -v '^#' .env | xargs)
+export $(grep -v '^#' .envtoken | xargs)
 
 # ==================== START ====================
 parse_args "$@"
@@ -38,18 +38,18 @@ fi
 # run_with_loading $verbose docker build --cache-from=$ImageName:$ImageTag -t $ImageName:$ImageTag $dockerfilePath
 # run_with_loading dancok # debug
 
-# ================= List Images =================
-echo -e "\n${BLUE}[+] List Image${RST}"
-echo -e "──────────────────────────────"
-echo -e "${CYAN}[*] Image List: ${RST}"
-docker images | grep -v "<none>"
+# # ================= List Images =================
+# echo -e "\n${BLUE}[+] List Image${RST}"
+# echo -e "──────────────────────────────"
+# echo -e "${CYAN}[*] Image List: ${RST}"
+# docker images | grep -v "<none>"
 
-# ================= TAG IMAGE =================
+# # ================= TAG IMAGE =================
 NewImage="${registry}/$username/$ImageName:$ImageTag"
-echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
-echo -e "──────────────────────────────"
-# echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
-run_with_loading docker tag $ImageName:$ImageTag $NewImage
+# echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
+# echo -e "──────────────────────────────"
+# # echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
+# run_with_loading docker tag $ImageName:$ImageTag $NewImage
 
 # ================= Login Registry =================
 echo -e "\n${BLUE}[+] Login Registry: $registry ${RST}"
