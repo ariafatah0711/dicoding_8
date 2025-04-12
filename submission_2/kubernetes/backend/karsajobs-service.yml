@@ -6,8 +6,8 @@ metadata:
     app: karsajobs
 spec:
   ports:
-    - port: 8080
-  selectors:
+  - port: 8080
+  selector:
     app: karsajobs
     tier: backend
-  ClusterIP: None
+  type: ClusterIP
