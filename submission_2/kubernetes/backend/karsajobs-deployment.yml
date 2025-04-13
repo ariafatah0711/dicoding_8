@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # versi api kubernetes: apps/v1 (merupakan versi API untuk objek Deployment) 
 kind: Deployment # menunjukan jenis object: Deployment (Menunjukkan bahwa objek yang dibuat adalah sebuah Deployment, digunakan untuk mengatur dan mengelola Pod secara otomatis (misalnya untuk rolling update, restart, dsb.).)
 metadata: # informasi tambahan object
-  # namespace: submission2
+  namespace: submission2
   name: karsajobs
 spec:
   replicas: 2 # jumlah Pod yang akan dijalankan (skalabilitas horizontal)
@@ -11,7 +11,7 @@ spec:
       tier: backend
   template: # 
     metadata: # informasi tambahan object Pod
-      # namespace: submission2
+      namespace: submission2
       labels: # Label ini harus cocok dengan selector, agar Deployment tahu Pod mana yang dikelola.
         app: karsajobs
         tier: backend

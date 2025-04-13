@@ -1,7 +1,7 @@
 apiVersion: v1 # versi api kubernetes
 kind: PersistentVolume # menunjukan jenis object: PersistentVolume (objek ini menyediakan resource storage fisik di cluster)
 metadata: # informasi tambahan object
-  # namespace: submission2
+  namespace: submission2
   name: mongo-pv
   labels: # mengelompokan object dengan label
     type: local # label tambahan (opsional), bisa digunakan untuk seleksi PV berdasarkan jenis/tipe
@@ -19,7 +19,7 @@ spec:
 apiVersion: v1 # versi api kubernetes
 kind: PersistentVolumeClaim # menunjukan jenis object: PersistentVolumeClaim (objek yang digunakan pod untuk 'meminta' storage dari PV)
 metadata: # informasi tambahan object
-  # namespace: submission2
+  namespace: submission2
   name: mongo-pvc
 spec:
   storageClassName: manual # harus cocok dengan storageClassName PV agar bisa saling terhubung

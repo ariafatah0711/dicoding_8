@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # versi 
 kind: StatefulSet
 metadata:
-  # namespace: submission2
+  namespace: submission2
   name: mongodb
   labels:
     app: mongodb
@@ -15,7 +15,7 @@ spec:
   minReadySeconds: 10
   template:
     metadata:
-      # namespace: submission2
+      namespace: submission2
       labels:
         app: mongodb
         tier: database
@@ -23,7 +23,6 @@ spec:
       containers:
       - name: mongo
         image: mongo:latest
-        # command: ["mongod", "--config", "/config/mongo.conf"]
         env:
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
           value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME" # Nama file tempat menyimpan username root MongoDB
