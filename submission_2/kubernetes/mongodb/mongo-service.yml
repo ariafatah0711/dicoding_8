@@ -1,16 +1,15 @@
-apiVersion: v1
-kind: Service
-metadata:
+apiVersion: v1 # versi api kubernetes
+kind: Service # menunjukan jenis object: service (berfungsi untuk memungkinkan komunikasi antara pod (internal)  atau antar pod dari dunia luar (external))
+metadata: # informasi tambahan object
   name: mongodb
-  labels:
+  labels: # mengelompokan object dengan label
     app: mongodb
     kind: database
 spec:
   ports:
-  - port: 27017
-    protocol: TCP
-    targetPort: 27017
-  selector:
+  - port: 27017 # Port Service yang diekspos ke internal cluster.
+    targetPort: 27017 # port yang digunakan oleh Container di Port
+  selector: # service akan mengarahkan ke pod yang memiliki label app=mongodb, dan tier=database
     app: mongodb
     tier: database
-  clusterIP: None
+  clusterIP: None  # menentukan type service: None (Headless Service) Artinya, service ini tidak memiliki IP internal, dan tiap request akan diteruskan langsung ke pod-pod yang cocok, tanpa load balancing.

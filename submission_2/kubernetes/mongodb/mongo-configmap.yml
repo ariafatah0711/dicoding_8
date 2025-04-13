@@ -5,6 +5,3 @@ metadata:
 data:
   APP_PORT: "8080"
   MONGO_HOST: mongodb
-  mongo.conf: |
-    storage:
-      dbPath: /data/db

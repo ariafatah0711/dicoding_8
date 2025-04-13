@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: apps/v1 # versi 
 kind: StatefulSet
 metadata:
   name: mongodb
@@ -21,7 +21,6 @@ spec:
       containers:
       - name: mongo
         image: mongo:latest
-        # command: ["mongod", "--config", "/config/mongo.conf"]
         env:
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
           value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME" # Nama file tempat menyimpan username root MongoDB

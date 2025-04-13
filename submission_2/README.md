@@ -4,4 +4,10 @@ kubectl apply -f kubernetes/backend/
 kubectl apply -f kubernetes/frontend/
 kubectl get svc
 kubectl get pods
-```.
+
+kubectl delete -f kubernetes/mongodb/
+kubectl delete -f kubernetes/backend/
+kubectl delete -f kubernetes/frontend/
+kubectl get svc
+kubectl get pods
+```
