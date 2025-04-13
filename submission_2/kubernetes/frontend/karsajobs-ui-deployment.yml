@@ -1,26 +1,26 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  namespace: submission2
+apiVersion: apps/v1 # versi api kubernetes: apps/v1 (merupakan versi API untuk objek Deployment) 
+kind: Deployment # menunjukan jenis object: Deployment (Menunjukkan bahwa objek yang dibuat adalah sebuah Deployment, digunakan untuk mengatur dan mengelola Pod secara otomatis (misalnya untuk rolling update, restart, dsb.).)
+metadata: # informasi tambahan object
+  namespace: submission2 # menggunakan object ini akan ditempatkan di namespace submission2
   name: karsajobs-ui
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
+  replicas: 2 # jumlah Pod yang akan dijalankan (skalabilitas horizontal)
+  selector: # menemukan Pod mana yang dikelola
+    matchLabels: # Deployment akan mencocokkan pod dengan label app: karsajobs-ui dan tier: frontend.
       app: karsajobs-ui
       tier: frontend
-  template:
-    metadata:
+  template: # Template ini adalah blueprint untuk membuat Pod.
+    metadata: # informasi tambahan object Pod
       namespace: submission2
-      labels:
+      labels: # Label ini harus cocok dengan selector, agar Deployment tahu Pod mana yang dikelola.
         app: karsajobs-ui
         tier: frontend
     spec:
-      containers:
-      - name: karsajobs-ui
-        image: ghcr.io/ariafatah0711/karsajobs-ui:latest
+      containers: # container yang akan dijalankan di Pod
+      - name: karsajobs-ui # nama container
+        image: ghcr.io/ariafatah0711/karsajobs-ui:latest # image container
         ports:
-          - containerPort: 8000
-        env:
+          - containerPort: 8000 # container ini akan mengekspose port 8000
+        env: # Variabel lingkungan (environment variable) yang digunakan oleh aplikasi di container.
           - name: VUE_APP_BACKEND
-            value: "http://localhost:30001"
+            value: "http://localhost:30001" # url backend

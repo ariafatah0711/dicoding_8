@@ -17,3 +17,8 @@ kubectl delete -f kubernetes/backend/
 kubectl delete -f kubernetes/frontend/
 kubectl delete namespace submission2
 ```
+
+# prometheus grafana
+```bash
+helm
+```

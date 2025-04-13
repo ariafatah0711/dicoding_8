@@ -1,47 +1,47 @@
-apiVersion: apps/v1 # versi 
-kind: StatefulSet
-metadata:
-  namespace: submission2
+apiVersion: apps/v1 # versi api kubernetes: apps/v1 (merupakan versi API untuk objek Deployment) 
+kind: StatefulSet # menunjukan jenis object: Statefulset (StatefulSet digunakan untuk mengelola Pod yang bersifat stateful, seperti database.)
+metadata: # informasi tambahan object
+  namespace: submission2 # menggunakan object ini akan ditempatkan di namespace submission2
   name: mongodb
-  labels:
+  labels: # mengelompokan object dengan label
     app: mongodb
 spec:
-  selector:
-    matchLabels:
+  serviceName: mongodb # Nama Headless Service (biasanya dibuat terpisah) yang diperlukan oleh StatefulSet agar bisa mengatur DNS untuk masing-masing Pod (misalnya mongodb-0.mongodb).
+  replicas: 1 # jumlah Pod yang akan dijalankan (skalabilitas horizontal)
+  minReadySeconds: 10 # Menentukan bahwa setelah Pod menyala, Kubernetes akan menunggu 10 detik sebelum menandainya sebagai “Ready”.
+  selector: # menemukan Pod mana yang dikelola
+    matchLabels: # Deployment akan mencocokkan pod dengan label app: mongodb, dan tier: database
       app: mongodb
       tier: database
-  serviceName: mongodb
-  replicas: 1
-  minReadySeconds: 10
-  template:
-    metadata:
+  template: # Template ini adalah blueprint untuk membuat Pod.
+    metadata: # informasi tambahan object Pod
       namespace: submission2
-      labels:
+      labels: # Label ini harus cocok dengan selector, agar Deployment tahu Pod mana yang dikelola.
         app: mongodb
         tier: database
     spec:
-      containers:
-      - name: mongo
-        image: mongo:latest
-        env:
+      containers: # container yang akan dijalankan di Pod
+      - name: mongo # nama container
+        image: mongo:latest # image container
+        env: # Variabel lingkungan (environment variable) yang digunakan oleh aplikasi di container.
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
           value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME" # Nama file tempat menyimpan username root MongoDB
         - name: MONGO_INITDB_ROOT_PASSWORD_FILE
           value: "/etc/mongo-credentials/MONGO_ROOT_PASSWORD" # Nama file tempat menyimpan password root MongoDB
         volumeMounts:
-          - name: data-volume
+          - name: data-volume # mengacu pada volumes yang valuenya pvc
             mountPath: /data/db # Path tempat menyimpan data MongoDB
-          - name: config-volume
+          - name: config-volume # mengacu pada volumes yang valuenya configmap
             mountPath: /config # Path tempat menyimpan konfigurasi MongoDB
-          - name: credentials-volume
+          - name: credentials-volume # mengacu pada volumes yang valuenya secret
             mountPath: /etc/mongo-credentials # Path tempat menyimpan credentials MongoDB
       volumes:
         - name: data-volume
-          persistentVolumeClaim:
+          persistentVolumeClaim: # menggunakan pvc
             claimName: mongo-pvc # Mengacu pada nama claim
         - name: config-volume
-          configMap:
+          configMap: # menggunakan config map
             name: mongo-config # Mengacu pada nama ConfigMap
         - name: credentials-volume
-          secret:
+          secret: # menggunakan secret
             secretName: mongo-secret # Mengacu pada nama Secret
