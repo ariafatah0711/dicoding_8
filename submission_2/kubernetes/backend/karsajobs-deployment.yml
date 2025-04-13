@@ -1,22 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
+apiVersion: apps/v1 # versi api kubernetes: apps/v1 (merupakan versi API untuk objek Deployment) 
+kind: Deployment # menunjukan jenis object: Deployment (Menunjukkan bahwa objek yang dibuat adalah sebuah Deployment, digunakan untuk mengatur dan mengelola Pod secara otomatis (misalnya untuk rolling update, restart, dsb.).)
+metadata: # informasi tambahan object
+  # namespace: submission2
   name: karsajobs
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
+  replicas: 2 # jumlah Pod yang akan dijalankan (skalabilitas horizontal)
+  selector: # selecttor
+    matchLabels: # Deployment akan mencocokkan pod dengan label app: karsajobs dan tier: backend.
       app: karsajobs
       tier: backend
-  template:
-    metadata:
-      labels:
+  template: # 
+    metadata: # informasi tambahan object Pod
+      # namespace: submission2
+      labels: # Label ini harus cocok dengan selector, agar Deployment tahu Pod mana yang dikelola.
         app: karsajobs
         tier: backend
     spec:
-      containers:
-      - name: karsajobs
-        image: ghcr.io/ariafatah0711/karsajobs:latest
+      containers: # container yang akan dijalankan di Pod
+      - name: karsajobs # nama container
+        image: ghcr.io/ariafatah0711/karsajobs:latest # image container
         ports:
           - containerPort: 8080
         env:

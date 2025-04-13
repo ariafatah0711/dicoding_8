@@ -1,6 +1,7 @@
 apiVersion: v1 # versi api kubernetes
 kind: Service # menunjukan jenis object: service (berfungsi untuk memungkinkan komunikasi antara pod (internal)  atau antar pod dari dunia luar (external))
 metadata: # informasi tambahan object
+  # namespace: submission2
   name: karsajobs
   labels: # mengelompokan object dengan label
     app: karsajobs

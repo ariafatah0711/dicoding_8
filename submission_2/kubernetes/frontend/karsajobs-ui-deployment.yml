@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # namespace: submission2
   name: karsajobs-ui
 spec:
   replicas: 2
@@ -10,6 +11,7 @@ spec:
       tier: frontend
   template:
     metadata:
+      # namespace: submission2
       labels:
         app: karsajobs-ui
         tier: frontend
