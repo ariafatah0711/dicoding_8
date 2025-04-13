@@ -1,7 +1,7 @@
 ```bash
-kubectl apply -f .\mongo-service.yml -f .\mongo-configmap.yml -f .\mongo-secret.yml -f .\mongo-statefulset.yml -f .\mongo-pv-pvc.yml -n dicoding
-
-kubectl apply -f .\karsajobs-service.yml -f .\karsajobs-deployment.yml -n dicoding
-
-kubectl apply -f .\karsajobs-ui-deployment.yml -f .\karsajobs-ui-service.yml -n dicoding
+kubectl apply -f kubernetes/mongodb/
+kubectl apply -f kubernetes/backend/
+kubectl apply -f kubernetes/frontend/
+kubectl get svc
+kubectl get pods
 ```

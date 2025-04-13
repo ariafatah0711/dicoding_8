@@ -19,23 +19,27 @@ spec:
         tier: database
     spec:
       containers:
-      - image: mongo
-        name: mongo
+      - name: mongo
+        image: mongo:latest
         env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: MONGO_USER
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: MONGO_PASS
+        - name: MONGO_INITDB_ROOT_USERNAME_FILE
+          value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME" # Nama file tempat menyimpan username root MongoDB
+        - name: MONGO_INITDB_ROOT_PASSWORD_FILE
+          value: "/etc/mongo-credentials/MONGO_ROOT_PASSWORD" # Nama file tempat menyimpan password root MongoDB
         volumeMounts:
-          - name: mongo-persistent-storage
-            mountPath: /data/db
+          - name: data-volume
+            mountPath: /data/db # Path tempat menyimpan data MongoDB
+          - name: config-volume
+            mountPath: /config # Path tempat menyimpan konfigurasi MongoDB
+          - name: credentials-volume
+            mountPath: /etc/mongo-credentials # Path tempat menyimpan credentials MongoDB
       volumes:
-        - name: mongo-persistent-storage
+        - name: data-volume
           persistentVolumeClaim:
-            claimName: mongo-pvc
+            claimName: mongo-pvc # Mengacu pada nama claim
+        - name: config-volume
+          configMap:
+            name: mongo-config # Mengacu pada nama ConfigMap
+        - name: credentials-volume
+          secret:
+            secretName: mongo-secret # Mengacu pada nama Secret
