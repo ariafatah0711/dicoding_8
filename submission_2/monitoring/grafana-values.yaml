@@ -3,7 +3,7 @@ adminPassword: admin
 
 service:
   type: NodePort
-  nodePort: 30003
+  nodePort: 30002
   port: 80
 
 datasources:
