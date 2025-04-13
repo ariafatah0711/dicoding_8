@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: karsajobs-ui
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: karsajobs-ui
@@ -21,4 +21,4 @@ spec:
           - containerPort: 8000
         env:
           - name: VUE_APP_BACKEND
-            value: "http://karsajobs:8080"
+            value: "http://192.168.49.2:31479 "

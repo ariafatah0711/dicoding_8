@@ -20,13 +20,12 @@ spec:
     spec:
       containers:
       - name: mongo
-        image: mongo:latest
-        # command: ["mongod", "--config", "/config/mongo.conf"]
+        image: mongo:4.4
         env:
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
-          value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME" # Nama file tempat menyimpan username root MongoDB
+          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME # Nama file tempat menyimpan username root MongoDB
         - name: MONGO_INITDB_ROOT_PASSWORD_FILE
-          value: "/etc/mongo-credentials/MONGO_ROOT_PASSWORD" # Nama file tempat menyimpan password root MongoDB
+          value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD # Nama file tempat menyimpan password root MongoDB
         volumeMounts:
           - name: data-volume
             mountPath: /data/db # Path tempat menyimpan data MongoDB
