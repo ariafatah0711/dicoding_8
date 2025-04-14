@@ -1,0 +1,65 @@
+version: 2.1 # versi circleci
+jobs: # list job yang akan dijalankan
+  # untuk karsajobs dan karsajobs-ui
+  lint-dockerfile: # Lint Dockerfile
+    docker: # docker yang akan digunakan
+      - image: cimg/base:2023.03
+    steps: # list step yang akan dijalankan
+      - checkout # checkout code dari repository
+      - run: # jalankan command
+          name: Lint Dockerfile
+          command: |
+            curl -Lo ./hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+            chmod +x ./hadolint
+            ./hadolint Dockerfile
+
+  # untuk karsajobs
+  test-app-karsajobs: # Test App for karsajobs
+    docker:
+      - image: golang:1.21
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            go mod download
+      - run:
+          name: Test App
+          command: |
+            go test -v -short --count=1 $(go list ./...)
+  build-app-karsajobs:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and Push App
+          command: |
+            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
+            chmod +x ./build_push_image_karsajobs.sh
+            ./build_push_image_karsajobs.sh
+
+workflows: # list workflow yang akan dijalankan
+  version: 2 # versi workflow
+  build-test-deploy: # nama workflow
+    jobs: # list job yang akan dijalankan
+      - lint-dockerfile: # job yang akan dijalankan
+          filters: # filter branch yang akan dijalankan
+            branches: # branch yang akan dijalankan
+              only: # branch yang akan dijalankan
+                - karsajobs
+      - test-app-karsajobs:
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: karsajobs
+      - build-app-karsajobs:
+          requires:
+            - lint-dockerfile
+            - test-app-karsajobs
+          filters:
+            branches:
+              only: karsajobs
