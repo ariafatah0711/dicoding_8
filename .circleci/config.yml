@@ -1,13 +1,13 @@
-version: 2.1 # Menentukan versi konfigurasi CircleCI yang digunakan
-jobs: # Menentukan job yang akan dijalankan
-  lint-dockerfile: # Menentukan nama job
-    docker: # Menentukan image yang akan digunakan
-      - image: cimg/base:2023.03 # Menentukan image yang akan digunakan
-    steps: # Menentukan langkah yang akan dijalankan
-      - checkout # checkout kode dari repository
-      - run: # Menjalankan perintah
-          name: Lint Dockerfile # Menentukan nama perintah  
-          command: | # Menentukan perintah yang akan dijalankan
+version: 2.1
+jobs:
+  lint-dockerfile:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - run:
+          name: Lint Dockerfile
+          command: |
             curl -Lo /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
             chmod +x /usr/local/bin/hadolint
             hadolint Dockerfile
@@ -52,14 +52,14 @@ jobs: # Menentukan job yang akan dijalankan
             echo "TOKEN_REGISTRY=${TOKEN_REGISTRY}" >> .envtoken
             ./build_push_image_karsajobs_ui.sh
 
-workflows: # Menentukan workflow yang akan dijalankan
-  version: 2 # Menentukan versi workflow yang digunakan
-  build-test-deploy-karsajobs: # Menentukan nama workflow
-    when: # Menentukan kondisi workflow yang akan dijalankan
-      and: # Menentukan kondisi workflow yang akan dijalankan
-        - equal: [ karsajobs, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
-    jobs: # Menentukan job yang akan dijalankan
-      - lint-dockerfile # Menentukan job yang akan dijalankan
+workflows:
+  version: 2
+  build-test-deploy-karsajobs:
+    when:
+      and:
+        - equal: [ "karsajobs", << pipeline.git.branch >> ]
+    jobs:
+      - lint-dockerfile
       - test-app:
           requires:
             - lint-dockerfile
@@ -67,10 +67,10 @@ workflows: # Menentukan workflow yang akan dijalankan
           requires:
             - test-app
 
-  build-test-deploy-karsajobs-ui: # Menentukan nama workflow
-    when: # Menentukan kondisi workflow yang akan dijalankan
-      and: # Menentukan kondisi workflow yang akan dijalankan
-        - equal: [ karsajobs-ui, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
+  build-test-deploy-karsajobs-ui:
+    when:
+      and:
+        - equal: [ "karsajobs-ui", << pipeline.git.branch >> ]
     jobs:
       - lint-dockerfile
       - build-app-karsajobs-ui:
