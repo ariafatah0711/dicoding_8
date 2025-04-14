@@ -38,9 +38,8 @@ jobs:
           name: Build and Push App
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
-            cat .envtoken
-            # chmod +x ./build_push_image_karsajobs.sh
-            # ./build_push_image_karsajobs.sh
+            chmod +x ./build_push_image_karsajobs.sh
+            ./build_push_image_karsajobs.sh
 
   # untuk karsajobs-ui
   build-app-karsajobs-ui:
@@ -54,26 +53,25 @@ jobs:
           name: Build and Push App
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
-            cat .envtoken
-            # chmod +x ./build_push_image_karsajobs_ui.sh
-            # ./build_push_image_karsajobs_ui.sh
+            chmod +x ./build_push_image_karsajobs_ui.sh
+            ./build_push_image_karsajobs_ui.sh
 
 workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - lint-dockerfile:
-          filters:
-            branches:
-              only: 
-                - karsajobs
-                - karsajobs-ui
-      - test-app-karsajobs:
-          requires:
-            - lint-dockerfile
-          filters:
-            branches:
-              only: karsajobs
+      # - lint-dockerfile:
+      #     filters:
+      #       branches:
+      #         only: 
+      #           - karsajobs
+      #           - karsajobs-ui
+      # - test-app-karsajobs:
+      #     requires:
+      #       - lint-dockerfile
+      #     filters:
+      #       branches:
+      #         only: karsajobs
       - build-app-karsajobs:
           requires:
             - test-app-karsajobs
