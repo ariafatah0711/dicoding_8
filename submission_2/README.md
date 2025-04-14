@@ -31,9 +31,9 @@ submission_2/
 │   ├── mongodb/         # Manifest MongoDB
 │   ├── backend/         # Manifest Backend
 │   └── frontend/        # Manifest Frontend
+├── grafana.png           # grafana images
+├── circleci.png          # circleci images           
 ├── monitoring/           # Konfigurasi monitoring
-├── images/              # Screenshot dan dokumentasi visual
-│   └── README/         # Screenshot hasil implementasi
 ├── link.txt            # Link container images
 └── monitoring.txt      # Output monitoring
 ```
