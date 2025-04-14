@@ -1,58 +1,78 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:submission_1
-version: 2.1
-orbs:
-  node: circleci/node@5
-jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    working_directory: ~/project/submission_1
-    steps:
-      - checkout:
-          path: ~/project
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          name: Run tests
-          command: npm test --passWithNoTests
-  build-node:
-    # Build node project
-    executor: node/default
-    working_directory: ~/project/submission_1
-    steps:
-      - checkout:
-          path: ~/project
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm run build
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      # Copy output to artifacts dir
-      - run:
-          name: Copy artifacts
-          command: cp -R build dist public .output .next .docusaurus ~/artifacts 2>/dev/null || true
-      - store_artifacts:
-          path: ~/artifacts
-          destination: node-build
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
+version: 2.1 # Menentukan versi konfigurasi CircleCI yang digunakan
+jobs: # Menentukan job yang akan dijalankan
+  lint-dockerfile: # Menentukan nama job
+    docker: # Menentukan image yang akan digunakan
+      - image: cimg/base:2023.03 # Menentukan image yang akan digunakan
+    steps: # Menentukan langkah yang akan dijalankan
+      - checkout # checkout kode dari repository
+      - run: # Menjalankan perintah
+          name: Lint Dockerfile # Menentukan nama perintah  
+          command: | # Menentukan perintah yang akan dijalankan
+            curl -Lo /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+            chmod +x /usr/local/bin/hadolint
+            hadolint Dockerfile
+
+  test-app:
     docker:
-      - image: cimg/base:stable
+      - image: golang:1.21
     steps:
-      # Replace this with steps to deploy to users
+      - checkout
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-workflows:
-  build-and-test:
-    jobs:
-      - test-node
-      - build-node:
+          name: Install Dependencies
+          command: |
+            go mod download
+      - run:
+          name: Test App
+          command: |
+            go test -v -short --count=1 $(go list ./...)
+
+  build-app-karsajobs:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and Push App
+          command: |
+            echo "TOKEN_REGISTRY=${TOKEN_REGISTRY}" >> .envtoken
+            ./build_push_image_karsajobs.sh
+
+  build-app-karsajobs-ui:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and Push App
+          command: |
+            echo "TOKEN_REGISTRY=${TOKEN_REGISTRY}" >> .envtoken
+            ./build_push_image_karsajobs_ui.sh
+
+workflows: # Menentukan workflow yang akan dijalankan
+  version: 2 # Menentukan versi workflow yang digunakan
+  build-test-deploy-karsajobs: # Menentukan nama workflow
+    when: # Menentukan kondisi workflow yang akan dijalankan
+      and: # Menentukan kondisi workflow yang akan dijalankan
+        - equal: [ karsajobs, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
+    jobs: # Menentukan job yang akan dijalankan
+      - lint-dockerfile # Menentukan job yang akan dijalankan
+      - test-app:
           requires:
-            - test-node
-    # - deploy:
-    #     requires:
-    #       - build-node
+            - lint-dockerfile
+      - build-app-karsajobs:
+          requires:
+            - test-app
+
+  build-test-deploy-karsajobs-ui: # Menentukan nama workflow
+    when: # Menentukan kondisi workflow yang akan dijalankan
+      and: # Menentukan kondisi workflow yang akan dijalankan
+        - equal: [ karsajobs-ui, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
+    jobs:
+      - lint-dockerfile
+      - build-app-karsajobs-ui:
+          requires:
+            - lint-dockerfile

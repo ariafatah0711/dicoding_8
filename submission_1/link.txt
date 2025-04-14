@@ -1,3 +1,0 @@
-github repository: https://github.com/ariafatah0711/a433-microservices/tree/proyek-pertama
-github packages: https://github.com/users/ariafatah0711/packages/container/package/item-app
-docker hub: https://hub.docker.com/repository/docker/ariafatah/item-app
