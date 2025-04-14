@@ -46,10 +46,10 @@ fi
 
 # # ================= TAG IMAGE =================
 NewImage="${registry}/$username/$ImageName:$ImageTag"
-# echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
-# echo -e "──────────────────────────────"
-# # echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
-# run_with_loading docker tag $ImageName:$ImageTag $NewImage
+echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
+echo -e "──────────────────────────────"
+echo -e "\n${CYAN}[*] Tagging the image $ImageName:$ImageTag to $NewImage"
+run_with_loading docker tag $ImageName:$ImageTag $NewImage
 
 # ================= Login Registry =================
 echo -e "\n${BLUE}[+] Login Registry: $registry ${RST}"
