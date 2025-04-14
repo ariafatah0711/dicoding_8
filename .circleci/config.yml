@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Build and Push App
           command: |
-            echo "TOKEN_REGISTRY=\${TOKEN_REGISTRY}" >> .envtoken
+            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
             chmod +x ./build_push_image_karsajobs.sh
             ./build_push_image_karsajobs.sh
 
@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Build and Push App
           command: |
-            echo "TOKEN_REGISTRY=\${TOKEN_REGISTRY}" >> .envtoken
+            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
             chmod +x ./build_push_image_karsajobs_ui.sh
             ./build_push_image_karsajobs_ui.sh
 
