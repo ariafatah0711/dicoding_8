@@ -67,7 +67,7 @@ fi
 # ================= PUSH IMAGE =================
 echo -e "\n${BLUE}[+] PUSH Image $NewImage ${RST}"
 echo -e "──────────────────────────────"
-# echo -e "\n${CYAN}[*] PUSH Image $NewImage${RST}"
+echo -e "\n${CYAN}[*] PUSH Image $NewImage${RST}"
 url=https://github.com/users/$username/packages/container/package/$ImageName
 echo -e "${CYAN}[INFO] Don't forget to change the visibility ${BLUE}$url${RST} to 'public' if you want the package to be public!${RST}"
 run_with_loading docker push $NewImage
