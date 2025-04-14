@@ -43,7 +43,6 @@ jobs: # list job yang akan dijalankan
           name: Build and Push App
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" > .envtoken
-            cat .envtoken
             chmod +x ./build_push_image_karsajobs.sh
             ./build_push_image_karsajobs.sh -v
 
