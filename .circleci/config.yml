@@ -57,7 +57,7 @@ workflows: # Menentukan workflow yang akan dijalankan
   build-test-deploy-karsajobs: # Menentukan nama workflow
     when: # Menentukan kondisi workflow yang akan dijalankan
       and: # Menentukan kondisi workflow yang akan dijalankan
-        - equal: [ karsajobs, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
+        - equal: [ "karsajobs", << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
     jobs: # Menentukan job yang akan dijalankan
       - lint-dockerfile # Menentukan job yang akan dijalankan
       - test-app:
@@ -70,7 +70,7 @@ workflows: # Menentukan workflow yang akan dijalankan
   build-test-deploy-karsajobs-ui: # Menentukan nama workflow
     when: # Menentukan kondisi workflow yang akan dijalankan
       and: # Menentukan kondisi workflow yang akan dijalankan
-        - equal: [ karsajobs-ui, << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
+        - equal: [ "karsajobs-ui", << pipeline.git.branch >> ] # Menentukan kondisi workflow yang akan dijalankan
     jobs:
       - lint-dockerfile
       - build-app-karsajobs-ui:
