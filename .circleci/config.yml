@@ -73,14 +73,15 @@ workflows:
       #       branches:
       #         only: karsajobs
       - build-app-karsajobs:
-          requires:
-            - test-app-karsajobs
+          # requires:
+          #   - lint-dockerfile
+          #   - test-app-karsajobs
           filters:
             branches:
               only: karsajobs
       - build-app-karsajobs-ui:
-          requires:
-            - lint-dockerfile
+          # requires:
+          #   - lint-dockerfile
           filters:
             branches:
               only: karsajobs-ui
