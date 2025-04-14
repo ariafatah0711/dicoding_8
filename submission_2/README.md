@@ -2,26 +2,27 @@
 
 ## Deskripsi Proyek
 Proyek ini adalah implementasi aplikasi web menggunakan Kubernetes yang terdiri dari:
-- Frontend service (React)
+- Frontend service (Vue)
 - Backend service (Go)
-- MongoDB database
+- Database service (MongoDB)
 - Monitoring stack (Prometheus & Grafana)
 
 ## URL Repository
 - [Repository Submission](https://github.com/ariafatah0711/dicoding_8/tree/main/submission_2)
+- [Repository Forking](https://github.com/ariafatah0711/a433-microservices)
 - [Frontend Repository](https://github.com/ariafatah0711/a433-microservices/tree/karsajobs-ui)
 - [Backend Repository](https://github.com/ariafatah0711/a433-microservices/tree/karsajobs)
 
-## Screenshot Implementasi
-![CI/CD Pipeline](images/README/image.png)
-![Grafana Dashboard](images/README/image-1.png)
+## Container Images
+Container images tersedia di GitHub Packages:
+- Backend: `ghcr.io/ariafatah0711/karsajobs`
+  - [ariafatah0711/karsajobs](https://github.com/users/ariafatah0711/packages/container/package/karsajobs)
+- Frontend: `ghcr.io/ariafatah0711/karsajobs-ui`
+  - [ariafatah0711/karsajobs-ui](https://github.com/users/ariafatah0711/packages/container/package/karsajobs-ui)
 
-## Prasyarat
-- Kubernetes cluster (minikube/kind)
-- Helm package manager
-- kubectl CLI
-- Docker
-- GitHub account (untuk CI/CD)
+## Screenshot Implementasi
+![Grafana Dashboard](./grafana.png)
+![CI/CD Pipeline](./circleci.png)
 
 ## Struktur Proyek
 ```
@@ -37,23 +38,8 @@ submission_2/
 └── monitoring.txt      # Output monitoring
 ```
 
-## Teknologi yang Digunakan
-- **Container Registry**: GitHub Packages
-- **CI/CD**: CircleCI
-- **Container Runtime**: Docker
-- **Orchestration**: Kubernetes
-- **Monitoring**: Prometheus & Grafana
-- **Backend**: Go
-- **Frontend**: React
-- **Database**: MongoDB
-
-## Container Images
-Container images tersedia di GitHub Packages:
-- Backend: `ghcr.io/ariafatah0711/karsajobs`
-- Frontend: `ghcr.io/ariafatah0711/karsajobs-ui`
-
-## Continuous Integration/Continuous Deployment (CI/CD)
-Proyek ini menggunakan CircleCI untuk otomatisasi build dan deployment:
+## Continuous Integration (CI)
+Proyek ini menggunakan CircleCI untuk otomatisasi build:
 
 ### Branch karsajobs (Backend)
 1. Lint Dockerfile
@@ -63,6 +49,20 @@ Proyek ini menggunakan CircleCI untuk otomatisasi build dan deployment:
 ### Branch karsajobs-ui (Frontend)
 1. Lint Dockerfile
 2. Build & Push Container
+
+### build_push_image_karsajobs
+```bash
+echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" > .envtoken
+chmod +x ./build_push_image_karsajobs.sh
+./build_push_image_karsajobs.sh -v
+```
+
+### build_push_image_karsajobs_ui
+```bash
+echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" > .envtoken
+chmod +x ./build_push_image_karsajobs_ui.sh
+./build_push_image_karsajobs_ui.sh -v
+```
 
 ## Instalasi karsajobs
 ### 1. Setup Namespace
