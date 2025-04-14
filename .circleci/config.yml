@@ -1,6 +1,7 @@
 version: 2.1
 jobs:
-  lint-dockerfile:
+  # untuk karsajobs dan karsajobs-ui
+  lint-dockerfile: # Lint Dockerfile
     docker:
       - image: cimg/base:2023.03
     steps:
@@ -12,7 +13,8 @@ jobs:
             chmod +x ./hadolint
             ./hadolint Dockerfile
 
-  test-app:
+  # untuk karsajobs
+  test-app-karsajobs: # Test App for karsajobs
     docker:
       - image: golang:1.21
     steps:
@@ -25,7 +27,6 @@ jobs:
           name: Test App
           command: |
             go test -v -short --count=1 $(go list ./...)
-
   build-app-karsajobs:
     docker:
       - image: cimg/base:2023.03
@@ -36,9 +37,11 @@ jobs:
       - run:
           name: Build and Push App
           command: |
-            echo "TOKEN_REGISTRY=${TOKEN_REGISTRY}" >> .envtoken
+            echo "TOKEN_REGISTRY=\${TOKEN_REGISTRY}" >> .envtoken
+            chmod +x ./build_push_image_karsajobs.sh
             ./build_push_image_karsajobs.sh
 
+  # untuk karsajobs-ui
   build-app-karsajobs-ui:
     docker:
       - image: cimg/base:2023.03
@@ -49,18 +52,9 @@ jobs:
       - run:
           name: Build and Push App
           command: |
-            echo "TOKEN_REGISTRY=${TOKEN_REGISTRY}" >> .envtoken
+            echo "TOKEN_REGISTRY=\${TOKEN_REGISTRY}" >> .envtoken
+            chmod +x ./build_push_image_karsajobs_ui.sh
             ./build_push_image_karsajobs_ui.sh
-
-  setup-circleci:
-    docker:
-      - image: cimg/base:2023.03
-    steps:
-      - checkout
-      - run:
-          name: Setup CircleCI
-          command: |
-            echo "Setting up CircleCI configuration..."
 
 workflows:
   version: 2
@@ -72,7 +66,7 @@ workflows:
               only: 
                 - karsajobs
                 - karsajobs-ui
-      - test-app:
+      - test-app-karsajobs:
           requires:
             - lint-dockerfile
           filters:
@@ -80,7 +74,7 @@ workflows:
               only: karsajobs
       - build-app-karsajobs:
           requires:
-            - test-app
+            - test-app-karsajobs
           filters:
             branches:
               only: karsajobs
@@ -90,7 +84,3 @@ workflows:
           filters:
             branches:
               only: karsajobs-ui
-      - setup-circleci:
-          filters:
-            branches:
-              only: circleci-project-setup
