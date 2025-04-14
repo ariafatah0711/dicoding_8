@@ -44,7 +44,7 @@ fi
 # echo -e "${CYAN}[*] Image List: ${RST}"
 # docker images | grep -v "<none>"
 
-# # ================= TAG IMAGE =================
+# ================= TAG IMAGE =================
 NewImage="${registry}/$username/$ImageName:$ImageTag"
 echo -e "\n${BLUE}[+] Tagging The Image: $ImageName:$ImageTag to $NewImage ${RST}"
 echo -e "──────────────────────────────"
