@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  go: circleci/golang@1.0.0
 jobs:
   lint-dockerfile:
     docker:
