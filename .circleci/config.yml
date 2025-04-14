@@ -1,0 +1,51 @@
+version: 2.1 # versi circleci
+jobs: # list job yang akan dijalankan
+  # untuk karsajobs dan karsajobs-ui
+  lint-dockerfile: # Lint Dockerfile
+    docker: # docker yang akan digunakan
+      - image: cimg/base:2023.03
+    steps: # list step yang akan dijalankan
+      - checkout # checkout code dari repository
+      - run: # jalankan command
+          name: Lint Dockerfile
+          command: |
+            curl -Lo ./hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+            chmod +x ./hadolint
+            ./hadolint Dockerfile
+
+  # untuk karsajobs-ui
+  build-app-karsajobs-ui:
+    docker:
+      - image: cimg/base:2023.03
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Debug Environment
+          command: |
+            echo "Checking environment..."
+            echo "GITHUB_TOKEN is set: $(if [ ! -z "${GITHUB_TOKEN}" ]; then echo "YES"; else echo "NO"; fi)"
+      - run:
+          name: Build and Push App
+          command: |
+            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" > .envtoken
+            cat .envtoken
+            chmod +x ./build_push_image_karsajobs.sh
+            ./build_push_image_karsajobs_ui.sh -v
+
+workflows: # list workflow yang akan dijalankan
+  version: 2 # versi workflow
+  build-test-deploy: # nama workflow
+    jobs: # list job yang akan dijalankan
+      - lint-dockerfile: # job yang akan dijalankan
+          filters: # filter branch yang akan dijalankan
+            branches: # branch yang akan dijalankan
+              only: # branch yang akan dijalankan
+                - karsajobs-ui
+      - build-app-karsajobs-ui:
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: karsajobs-ui
