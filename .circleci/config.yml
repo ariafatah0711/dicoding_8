@@ -39,8 +39,8 @@ jobs:
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
             cat .envtoken
-            chmod +x ./build_push_image_karsajobs.sh
-            ./build_push_image_karsajobs.sh
+            # chmod +x ./build_push_image_karsajobs.sh
+            # ./build_push_image_karsajobs.sh
 
   # untuk karsajobs-ui
   build-app-karsajobs-ui:
@@ -55,8 +55,8 @@ jobs:
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
             cat .envtoken
-            chmod +x ./build_push_image_karsajobs_ui.sh
-            ./build_push_image_karsajobs_ui.sh
+            # chmod +x ./build_push_image_karsajobs_ui.sh
+            # ./build_push_image_karsajobs_ui.sh
 
 workflows:
   version: 2
