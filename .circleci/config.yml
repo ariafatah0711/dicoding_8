@@ -39,7 +39,7 @@ jobs: # list job yang akan dijalankan
           command: |
             echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
             chmod +x ./build_push_image_karsajobs.sh
-            ./build_push_image_karsajobs.sh
+            ./build_push_image_karsajobs.sh -v
 
 workflows: # list workflow yang akan dijalankan
   version: 2 # versi workflow
@@ -58,7 +58,6 @@ workflows: # list workflow yang akan dijalankan
               only: karsajobs
       - build-app-karsajobs:
           requires:
-            - lint-dockerfile
             - test-app-karsajobs
           filters:
             branches:
