@@ -35,9 +35,15 @@ jobs: # list job yang akan dijalankan
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Debug Environment
+          command: |
+            echo "Checking environment..."
+            echo "GITHUB_TOKEN is set: $(if [ ! -z "${GITHUB_TOKEN}" ]; then echo "YES"; else echo "NO"; fi)"
+      - run:
           name: Build and Push App
           command: |
-            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" >> .envtoken
+            echo "TOKEN_REGISTRY=${GITHUB_TOKEN}" > .envtoken
+            cat .envtoken
             chmod +x ./build_push_image_karsajobs.sh
             ./build_push_image_karsajobs.sh -v
 
