@@ -1,0 +1,44 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq_container'
+    ports:
+        - 5673:5672
+        - 15673:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - e_commerce_network
+  order-services:
+    image: ghcr.io/ariafatah0711/order-service:latest
+    container_name: 'order-service'
+    depends_on:
+      - rabbitmq
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: production
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      PORT: 3000
+    networks:
+      - e_commerce_network
+  shipping-service:
+    image: ghcr.io/ariafatah0711/shipping-service:latest
+    container_name: 'shipping-service'
+    depends_on:
+      - rabbitmq
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+    ports:
+      - 3001:3001
+    environment:
+      NODE_ENV: production
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      PORT: 3001
+    networks:
+      - e_commerce_network
+networks:
+  e_commerce_network:
+    driver: bridge
