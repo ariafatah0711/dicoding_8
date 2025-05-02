@@ -21,7 +21,7 @@ kubectl create namespace submission3
 
 # helm repo add bitnami https://charts.bitnami.com/bitnami
 # helm repo update
-# helm install rabbitmq bitnami/rabbitmq -f rabbitmq/value.yaml \
+# helm install rabbitmq bitnami/rabbitmq \
 #   --namespace submission3 \
 #   --create-namespace \
 #   --set auth.username=admin \
