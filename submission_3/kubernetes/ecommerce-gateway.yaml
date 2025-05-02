@@ -30,8 +30,8 @@ spec:
     - match: # Daftar URI yang cocok untuk rule ini
         - uri:
             exact: /order # Cocokkan request yang URI-nya persis /order
-        - uri:
-            exact: /shipping # Cocokkan request yang URI-nya persis /shipping
+        # - uri:
+        #     exact: /shipping # Cocokkan request yang URI-nya persis /shipping
       route: # Routing trafik ke beberapa service
         - destination:
             host: order-service.submission3.svc.cluster.local # Kirim ke service order-service
@@ -39,9 +39,9 @@ spec:
             port:
               number: 3000 # Port internal order-service
           weight: 100 # Beban (weight) untuk load balancing: 100 (penuh)
-        - destination:
-            host: shipping-service.submission3.svc.cluster.local # Kirim ke service shipping-service
-            # host: shipping-service
-            port:
-              number: 3001 # Port internal shipping-service
-          weight: 100 # Beban (weight) 100, menyebabkan trafik dibagi rata
+        # - destination:
+        #     host: shipping-service.submission3.svc.cluster.local # Kirim ke service shipping-service
+        #     # host: shipping-service
+        #     port:
+        #       number: 3001 # Port internal shipping-service
+        #   weight: 100 # Beban (weight) 100, menyebabkan trafik dibagi rata
