@@ -1,0 +1,37 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: order-gateway
+  namespace: submission3
+spec:
+  selector:
+    istio: ingressgateway # Sesuai default Istio Ingress Gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: order-virtualservice
+  namespace: submission3
+spec:
+  gateways:
+    - order-gateway
+  hosts:
+    - "*"
+  http:
+    - match:
+        - uri:
+            exact: /order
+      route:
+        - destination:
+            host: order-service.submission3.svc.cluster.local
+            port:
+              number: 3000
