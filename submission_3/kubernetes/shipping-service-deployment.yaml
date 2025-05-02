@@ -13,10 +13,10 @@ spec:
       labels:
         app: shipping-service
     spec:
-      # initContainers:
-      #   - name: wait-for-rabbitmq
-      #     image: busybox
-      #     command: ['sh', '-c', 'until nc -z rabbitmq.submission3.svc.cluster.local 5672; do echo waiting for rabbitmq; sleep 2; done']
+      initContainers:
+        - name: wait-for-rabbitmq
+          image: busybox
+          command: ['sh', '-c', 'until nc -z rabbitmq 5672; do echo waiting for rabbitmq; sleep 2; done']
       containers:
         - name: shipping-service
           image: ghcr.io/ariafatah0711/shipping-service:latest
@@ -26,8 +26,8 @@ spec:
             - name: NODE_ENV
               value: production
             - name: AMQP_URL
-              # value: amqp://guest:guest@rabbitmq:5672
-              value: amqp://guest:guest@rabbitmq.submission3.svc.cluster.local:5672 
+              value: amqp://guest:guest@rabbitmq:5672
+              # value: amqp://guest:guest@rabbitmq.submission3.svc.cluster.local:5672 
             - name: PORT
               value: "3001"
           # readinessProbe:

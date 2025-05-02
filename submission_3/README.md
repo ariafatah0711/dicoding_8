@@ -19,13 +19,18 @@ docker-compose down
 ```bash
 kubectl create namespace submission3
 
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install rabbitmq bitnami/rabbitmq \
-  --namespace submission3 \
-  --set auth.username=guest \
-  --set auth.password=guest \
-  --set fullnameOverride=rabbitmq \
-  --set persistence.enabled=false
+# helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm repo update
+# helm install rabbitmq bitnami/rabbitmq \
+#   --namespace submission3 \
+#   --create-namespace \
+#   --set auth.username=guest \
+#   --set auth.password=guest \
+#   --set fullnameOverride=rabbitmq \
+#   --set service.type=NodePort \
+#   --set service.nodePorts.amqp=30006 \
+#   --set service.nodePorts.manager=30007 \
+#   --set persistence.enabled=false
 
 kubectl apply -f kubernetes
 
@@ -45,4 +50,9 @@ curl -X POST http://192.168.49.2:30010/order   -H "Content-Type: application/jso
 kubectl delete -f kubernetes/
 helm uninstall rabbitmq  --namespace submission3
 kubectl delete namespace submission3
+```
+
+# draft
+```bash
+nc -zv rabbitmq 5672
 ```
