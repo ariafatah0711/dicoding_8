@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   namespace: submission3
   name: shipping-service
+  annotations:
+    sidecar.istio.io/inject: "false"
 spec:
   replicas: 1
   selector:
@@ -32,12 +34,12 @@ spec:
               # value: amqp://admin:admin123@192.168.49.2:30006
             - name: PORT
               value: "3001"
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3001
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 5
 
 ---
 

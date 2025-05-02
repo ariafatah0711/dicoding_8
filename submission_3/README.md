@@ -20,7 +20,7 @@ docker-compose down
 kubectl create namespace submission3
 
 # istio
-kubectl label namespace submission3 istio-injection=enabled
+# kubectl label namespace submission3 istio-injection=enabled
 
 # helm repo add bitnami https://charts.bitnami.com/bitnami
 # helm repo update
