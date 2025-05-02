@@ -1,52 +1,54 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1 # Versi API untuk resource Deployment
+kind: Deployment # Mendefinisikan sebuah Deployment
 metadata:
-  namespace: submission3
-  name: rabbitmq
+  namespace: submission3 # Namespace yang digunakan
+  name: rabbitmq # Nama Deployment
 spec:
-  replicas: 1
+  replicas: 1 # Jumlah pod yang dijalankan adalah 1
   selector:
     matchLabels:
-      app: rabbitmq
+      app: rabbitmq # Selector untuk memilih pod berdasarkan label ini
   template:
     metadata:
       labels:
-        app: rabbitmq
+        app: rabbitmq # Label pod (harus cocok dengan selector di atas)
     spec:
       containers:
-        - name: rabbitmq
-          image: rabbitmq:3.8-management-alpine
+        - name: rabbitmq # Nama container
+          image: rabbitmq:3.8-management-alpine # Image container
           ports:
-            - containerPort: 5672
-            - containerPort: 15672
-          volumeMounts:
+            - containerPort: 5672 # Port untuk AMQP protocol (komunikasi antar service)
+            - containerPort: 15672 # Port untuk RabbitMQ Web UI (management)
+          volumeMounts: # Mount volume untuk data dan log
             - mountPath: /var/lib/rabbitmq
-              name: rabbitmq-data
+              name: rabbitmq-data # Penyimpanan data RabbitMQ
             - mountPath: /var/log/rabbitmq
-              name: rabbitmq-log
-      volumes:    
+              name: rabbitmq-log # Penyimpanan log RabbitMQ
+      volumes:
           - name: rabbitmq-data
-            emptyDir: {}
+            emptyDir: {} # Volume kosong (ephemeral) untuk data RabbitMQ
           - name: rabbitmq-log
-            emptyDir: {}
+            emptyDir: {} # Volume kosong (ephemeral) untuk log RabbitMQ
 
 ---
 
-apiVersion: v1
-kind: Service
+apiVersion: v1 # Versi API untuk Service
+kind: Service # Mendefinisikan sebuah Service untuk expose Deployment
 metadata:
-  namespace: submission3
-  name: rabbitmq
+  namespace: submission3 # Namespace yang digunakan
+  name: rabbitmq # Nama Service
 spec:
   selector:
-    app: rabbitmq
+    app: rabbitmq # Menghubungkan Service ke Pod dengan label ini
   ports:
-    - name: tcp-amqp
-      port: 5672
-      targetPort: 5672
-      nodePort: 30006
+    # Port yang digunakan dalam cluster untuk AMQP
+    - name: tcp-amqp # Nama port service (opsional, untuk identifikasi)
+      port: 5672 # Port yang diekspos oleh Service di dalam cluster
+      targetPort: 5672 # Port dalam container yang akan diteruskan
+      nodePort: 30006 # Port yang diekspos di node (akses luar cluster)
+    # Port untuk Web UI RabbitMQ dalam cluster
     - name: http-management
       port: 15672
       targetPort: 15672
       nodePort: 30007
-  type: NodePort
+  type: NodePort # Tipe Service: dapat diakses melalui IP Node di port tertentu

@@ -1,45 +1,47 @@
-apiVersion: networking.istio.io/v1beta1
-kind: Gateway
-metadata:
-  name: ecommerce-gateway
-  namespace: submission3
+apiVersion: networking.istio.io/v1beta1 # Versi API resource Istio yang digunakan
+kind: Gateway # Mendefinisikan sebuah Gateway Istio
+metadata: 
+  name: ecommerce-gateway # Nama gateway
+  namespace: submission3 # Namespace yang digunakan
 spec:
   selector:
-    istio: ingressgateway # Sesuai default Istio Ingress Gateway
+    istio: ingressgateway # Memilih Istio default ingress gateway (biasanya di istio-system)
   servers:
     - port:
-        number: 80
-        name: http
-        protocol: HTTP
+        number: 80 # Mendengarkan pada port 80
+        name: http # Nama port (harus unik di dalam server)
+        protocol: HTTP # Protokol yang digunakan: HTTP
       hosts:
-        - "*"
+        - "*" # Menerima trafik dari semua host/domain (wildcard)
 
 ---
 
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
+apiVersion: networking.istio.io/v1beta1 # Versi API untuk VirtualService
+kind: VirtualService # Mendefinisikan routing trafik untuk service internal
 metadata:
-  name: order-virtualservice
-  namespace: submission3
+  name: order-virtualservice # Nama VirtualService
+  namespace: submission3 # Namespace yang digunakan
 spec:
   gateways:
-    - ecommerce-gateway
+    - ecommerce-gateway # Gateway yang digunakan untuk menerima trafik
   hosts:
-    - "*"
+    - "*" # Berlaku untuk semua host/domain
   http:
-    - match:
+    - match: # Daftar URI yang cocok untuk rule ini
         - uri:
-            exact: /order
+            exact: /order # Cocokkan request yang URI-nya persis /order
         - uri:
-            exact: /shipping
-      route:
+            exact: /shipping # Cocokkan request yang URI-nya persis /shipping
+      route: # Routing trafik ke beberapa service
         - destination:
-            host: order-service.submission3.svc.cluster.local
+            host: order-service.submission3.svc.cluster.local # Kirim ke service order-service
+            # host: order-service
             port:
-              number: 3000
-          # weight: 100
+              number: 3000 # Port internal order-service
+          weight: 100 # Beban (weight) untuk load balancing: 100 (penuh)
         - destination:
-            host: shipping-service
+            host: shipping-service.submission3.svc.cluster.local # Kirim ke service shipping-service
+            # host: shipping-service
             port:
-              number: 3001
-          # weight: 100
+              number: 3001 # Port internal shipping-service
+          weight: 100 # Beban (weight) 100, menyebabkan trafik dibagi rata

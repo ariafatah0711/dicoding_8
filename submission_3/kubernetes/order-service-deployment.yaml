@@ -1,48 +1,48 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1 # Versi API untuk resource Deployment
+kind: Deployment # Mendefinisikan sebuah Deployment
 metadata:
-  namespace: submission3
-  name: order-service
+  namespace: submission3 # Namespace yang digunakan
+  name: order-service # Nama Deployment
 spec:
-  replicas: 1
+  replicas: 1 # Jumlah pod yang dijalankan adalah 1
   selector:
     matchLabels:
-      app: order-service
+      app: order-service # Selector untuk memilih pod berdasarkan label ini
   template:
     metadata:
       labels:
-        app: order-service
+        app: order-service # Label pod (harus cocok dengan selector di atas)
     spec:
       containers:
-        - name: order-service
-          image: ghcr.io/ariafatah0711/order-service:latest
+        - name: order-service # Nama container
+          image: ghcr.io/ariafatah0711/order-service:latest # Image container dari GitHub Container Registry
           ports:
-            - containerPort: 3000
-          env:
-            - name: NODE_ENV
+            - containerPort: 3000 # Port di dalam container yang akan diekspos
+          env: # Variabel lingkungan untuk container
+            - name: NODE_ENV # Menjalankan Node.js dalam mode production
               value: production
-            - name: AMQP_URL
+            - name: AMQP_URL # Konfigurasi URL RabbitMQ untuk komunikasi antar service
               value: amqp://guest:guest@rabbitmq.submission3.svc.cluster.local:5672
               # value: amqp://guest:guest@rabbitmq:5672
               # value: amqp://admin:admin123@rabbitmq:5672
               # value: amqp://admin:admin123@192.168.49.2:30006
-            - name: PORT
+            - name: PORT # Port aplikasi di dalam container
               value: "3000"
 
 ---
 
-apiVersion: v1
-kind: Service
+apiVersion: v1 # Versi API untuk Service
+kind: Service # Mendefinisikan sebuah Service untuk expose Deployment
 metadata:
-  namespace: submission3
-  name: order-service
+  namespace: submission3 # Namespace yang digunakan
+  name: order-service # Nama Service
 spec:
   selector:
-    app: order-service
+    app: order-service # Menghubungkan Service ke Pod dengan label ini
   ports:
-    - name: http-order-service
-      protocol: TCP
-      port: 3000
-      targetPort: 3000
-      nodePort: 30010
-  type: NodePort
+    - name: http-order-service # Nama port service (opsional, untuk identifikasi)
+      protocol: TCP # Protokol yang digunakan
+      port: 3000 # Port yang diekspos oleh Service di dalam cluster
+      targetPort: 3000 # Port dalam container yang akan diteruskan
+      nodePort: 30010 # Port yang diekspos di node (akses luar cluster)
+  type: NodePort # Tipe Service: dapat diakses melalui IP Node di port tertentu
