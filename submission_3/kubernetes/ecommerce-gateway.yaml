@@ -37,9 +37,9 @@ spec:
             host: order-service.submission3.svc.cluster.local
             port:
               number: 3000
-          weight: 100
+          # weight: 100
         - destination:
             host: shipping-service
             port:
               number: 3001
-          weight: 100
+          # weight: 100
