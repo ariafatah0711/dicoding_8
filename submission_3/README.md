@@ -20,7 +20,7 @@ docker-compose down
 kubectl create namespace submission3
 
 # istio
-# kubectl label namespace submission3 istio-injection=enabled
+kubectl label namespace submission3 istio-injection=enabled
 
 # helm repo add bitnami https://charts.bitnami.com/bitnami
 # helm repo update
@@ -35,9 +35,22 @@ kubectl create namespace submission3
 #   --set service.nodePorts.manager=30007 \
 #   --set persistence.enabled=false \
 
+kubectl apply -f kubernetes/rabbitmq-deployment.yaml
+kubectl port-forward --namespace submission3 svc/rabbitmq 15672:15672
+
 kubectl apply -f kubernetes
 
-kubectl port-forward --namespace submission3 svc/rabbitmq 15672:15672
+istioctl analyze
+
+# istio
+minikube tunnel
+export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
+export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+echo "$INGRESS_HOST" "$INGRESS_PORT" "$SECURE_INGRESS_PORT"
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+echo "$GATEWAY_URL"
+echo "http://$GATEWAY_URL/order"
 
 # test post
 curl -X POST http://$(minikube ip)/order -H "Content-Type: application/json" \
