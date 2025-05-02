@@ -53,7 +53,8 @@ echo "$GATEWAY_URL"
 echo "http://$GATEWAY_URL/order"
 
 # test post
-curl -X POST http://$(minikube ip)/order -H "Content-Type: application/json" \
+# curl -X POST http://$(minikube ip)/order -H "Content-Type: application/json" \
+curl -X POST http://localhost/order -H "Content-Type: application/json" \
 -d '{
   "order": {
     "book_name": "Harry Potter",
@@ -78,6 +79,9 @@ kubectl delete namespace submission3
 
 # draft
 ```bash
+kubectl logs -f service/rabbitmq -n submission3
+kubectl rollout restart deployment/shipping-service -n submission3
+
 nc -zv rabbitmq 5672
 curl -u guest:guest http://rabbitmq:15672/api/overview
 curl -u admin:admin123 http://rabbitmq:15672/api/overview
