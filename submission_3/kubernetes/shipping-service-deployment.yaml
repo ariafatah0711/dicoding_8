@@ -33,12 +33,12 @@ spec:
               # value: amqp://admin:admin123@192.168.49.2:30006
             - name: PORT # Port aplikasi di dalam container
               value: "3001"
-          # readinessProbe: # (Opsional) Mengecek apakah aplikasi siap menerima trafik
-          #   httpGet:
-          #     path: / # Path yang dicek
-          #     port: 3001 # Port yang dicek
-          #   initialDelaySeconds: 10 # Delay awal sebelum pengecekan pertama
-          #   periodSeconds: 5 # Interval antar pengecekan
+          readinessProbe: # (Opsional) Mengecek apakah aplikasi siap menerima trafik
+            httpGet:
+              path: / # Path yang dicek
+              port: 3001 # Port yang dicek
+            initialDelaySeconds: 10 # Delay awal sebelum pengecekan pertama
+            periodSeconds: 5 # Interval antar pengecekan
 
 ---
 

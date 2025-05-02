@@ -4,11 +4,26 @@
 
 Submission ini merupakan implementasi microservices dengan komunikasi menggunakan RabbitMQ, service mesh dengan Istio, dan dideploy menggunakan Kubernetes (Minikube).
 
+![alt text](images/README/image.png)
+
 Aplikasi terdiri dari:
 
 * `order-service`: menerima order dari user
 * `shipping-service`: menerima pesan RabbitMQ dari `order-service`
 * `RabbitMQ`: sebagai message broker
+
+## URL Repository
+- [Repository Submission](https://github.com/ariafatah0711/dicoding_8/tree/main/submission_3)
+- [Repository Forking](https://github.com/ariafatah0711/a433-microservices)
+- [order-service Repository](https://github.com/ariafatah0711/a433-microservices/tree/order-service)
+- [shipping-service Repository](https://github.com/ariafatah0711/a433-microservices/tree/shipping-service)
+
+## Container Images
+Container images tersedia di GitHub Packages:
+- Backend: `ghcr.io/ariafatah0711/order-service`
+  - [ariafatah0711/order-service](https://github.com/users/ariafatah0711/packages/container/package/order-service)
+- Frontend: `ghcr.io/ariafatah0711/shipping-service`
+  - [ariafatah0711/shipping-service](https://github.com/users/ariafatah0711/packages/container/package/shipping-service)
 
 ## Struktur Proyek
 
@@ -19,6 +34,7 @@ submission_3/
 │   ├── shipping-deployment.yaml
 │   └── rabbitmq-deployment.yaml
 │   └── ecommerce-gateway.yaml
+└── link.txt            # Link container images
 ```
 
 ## Instalasi dan Deploy
