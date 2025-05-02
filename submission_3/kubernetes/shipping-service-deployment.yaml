@@ -26,16 +26,12 @@ spec:
             - name: NODE_ENV
               value: production
             - name: AMQP_URL
-              value: amqp://guest:guest@rabbitmq:5672
-              # value: amqp://guest:guest@rabbitmq.submission3.svc.cluster.local:5672 
+              value: amqp://guest:guest@rabbitmq.submission3.svc.cluster.local:5672 
+              # value: amqp://guest:guest@rabbitmq:5672
+              # value: amqp://admin:admin123@rabbitmq:5672
+              # value: amqp://admin:admin123@192.168.49.2:30006
             - name: PORT
               value: "3001"
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3001
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 5
 
 ---
 

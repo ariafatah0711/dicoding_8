@@ -21,30 +21,35 @@ kubectl create namespace submission3
 
 # helm repo add bitnami https://charts.bitnami.com/bitnami
 # helm repo update
-# helm install rabbitmq bitnami/rabbitmq \
+# helm install rabbitmq bitnami/rabbitmq -f rabbitmq/value.yaml \
 #   --namespace submission3 \
 #   --create-namespace \
-#   --set auth.username=guest \
-#   --set auth.password=guest \
+#   --set auth.username=admin \
+#   --set auth.password=admin123 \
 #   --set fullnameOverride=rabbitmq \
 #   --set service.type=NodePort \
 #   --set service.nodePorts.amqp=30006 \
 #   --set service.nodePorts.manager=30007 \
-#   --set persistence.enabled=false
+#   --set persistence.enabled=false \
 
 kubectl apply -f kubernetes
 
 kubectl port-forward --namespace submission3 svc/rabbitmq 15672:15672
 
-# test
-curl -X POST http://192.168.49.2:30010/order   -H "Content-Type: application/json"   -d '{
-    "order": {
-      "book_name": "Harry Potter",
-      "author": "J.K Rowling",
-      "buyer": "Fikri Helmi Setiawan",
-      "shipping_address": "Jl. Batik Kumeli no 50 Bandung"
-    }
-  }'
+# test post
+curl -X POST http://192.168.49.2:30010/order -H "Content-Type: application/json" \
+-d '{
+  "order": {
+    "book_name": "Harry Potter",
+    "author": "J.K Rowling",
+    "buyer": "Fikri Helmi Setiawan",
+    "shipping_address": "Jl. Batik Kumeli no 50 Bandung"
+  }
+}'
+
+# verifikasi
+kubectl logs -n submission3 service/shipping-service
+kubectl logs -n submission3 service/order-service
 
 # Hapus aplikasi
 kubectl delete -f kubernetes/
@@ -55,4 +60,6 @@ kubectl delete namespace submission3
 # draft
 ```bash
 nc -zv rabbitmq 5672
+curl -u guest:guest http://rabbitmq:15672/api/overview
+curl -u admin:admin123 http://rabbitmq:15672/api/overview
 ```
