@@ -1,44 +1,48 @@
-version: "3.2"
+version: "3.2"  # Versi docker-compose yang digunakan
+
 services:
   rabbitmq:
-    image: rabbitmq:3.8-management-alpine
-    container_name: 'rabbitmq_container'
+    image: rabbitmq:3.8-management-alpine  # Menggunakan image RabbitMQ versi ringan dengan UI management
+    container_name: 'rabbitmq_container'  # Nama container untuk RabbitMQ
     ports:
-        - 5673:5672
-        - 15673:15672
+        - 5673:5672    # Port AMQP RabbitMQ (host:container)
+        - 15673:15672  # Port UI management RabbitMQ (host:container)
     volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/  # Persistensi data RabbitMQ
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq    # Persistensi log RabbitMQ
     networks:
-        - e_commerce_network
+        - e_commerce_network  # Menghubungkan ke network khusus
+
   order-services:
-    image: ghcr.io/ariafatah0711/order-service:latest
-    container_name: 'order-service'
+    image: ghcr.io/ariafatah0711/order-service:latest  # Image dari GitHub Container Registry
+    container_name: 'order-service'  # Nama container
     depends_on:
-      - rabbitmq
-    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+      - rabbitmq  # Menunggu RabbitMQ siap sebelum container ini dijalankan
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'  # Menunggu RabbitMQ siap, lalu jalankan aplikasi Node.js
     ports:
-      - 3000:3000
+      - 3000:3000  # Ekspose port aplikasi Order Service
     environment:
-      NODE_ENV: production
-      AMQP_URL: amqp://guest:guest@rabbitmq:5672
-      PORT: 3000
+      NODE_ENV: production  # Environment variable untuk mode produksi
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672  # URL koneksi ke RabbitMQ
+      PORT: 3000  # Port aplikasi
     networks:
-      - e_commerce_network
+      - e_commerce_network  # Terhubung ke network yang sama
+
   shipping-service:
-    image: ghcr.io/ariafatah0711/shipping-service:latest
-    container_name: 'shipping-service'
+    image: ghcr.io/ariafatah0711/shipping-service:latest  # Image Shipping Service dari GitHub Container Registry
+    container_name: 'shipping-service'  # Nama container
     depends_on:
-      - rabbitmq
-    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+      - rabbitmq  # Menunggu RabbitMQ siap sebelum dijalankan
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'  # Tunggu RabbitMQ, lalu jalankan aplikasi
     ports:
-      - 3001:3001
+      - 3001:3001  # Ekspose port Shipping Service
     environment:
-      NODE_ENV: production
-      AMQP_URL: amqp://guest:guest@rabbitmq:5672
-      PORT: 3001
+      NODE_ENV: production  # Mode produksi
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672  # URL koneksi ke RabbitMQ
+      PORT: 3001  # Port aplikasi
     networks:
-      - e_commerce_network
+      - e_commerce_network  # Terhubung ke network yang sama
+
 networks:
   e_commerce_network:
-    driver: bridge
+    driver: bridge  # Menggunakan bridge network default Docker

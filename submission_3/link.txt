@@ -1,0 +1,2 @@
+https://github.com/users/ariafatah0711/packages/container/package/order-service
+https://github.com/users/ariafatah0711/packages/container/package/shipping-service
