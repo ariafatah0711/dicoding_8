@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: order-gateway
+  name: ecommerce-gateway
   namespace: submission3
 spec:
   selector:
@@ -23,15 +23,23 @@ metadata:
   namespace: submission3
 spec:
   gateways:
-    - order-gateway
+    - ecommerce-gateway
   hosts:
     - "*"
   http:
     - match:
         - uri:
             exact: /order
+        - uri:
+            exact: /shipping
       route:
         - destination:
             host: order-service.submission3.svc.cluster.local
             port:
               number: 3000
+          weight: 100
+        - destination:
+            host: shipping-service
+            port:
+              number: 3001
+          weight: 100

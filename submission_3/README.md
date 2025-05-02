@@ -40,7 +40,8 @@ kubectl port-forward --namespace submission3 svc/rabbitmq 15672:15672
 
 kubectl apply -f kubernetes
 
-istioctl analyze
+# istioctl analyze
+istioctl analyze -n submission3
 
 # istio
 minikube tunnel

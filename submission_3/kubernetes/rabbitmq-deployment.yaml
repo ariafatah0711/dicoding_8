@@ -41,11 +41,11 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    - name: amqp
+    - name: tcp-amqp
       port: 5672
       targetPort: 5672
       nodePort: 30006
-    - name: management
+    - name: http-management
       port: 15672
       targetPort: 15672
       nodePort: 30007

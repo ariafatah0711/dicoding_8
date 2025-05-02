@@ -40,7 +40,8 @@ spec:
   selector:
     app: order-service
   ports:
-    - protocol: TCP
+    - name: http-order-service
+      protocol: TCP
       port: 3000
       targetPort: 3000
       nodePort: 30010
